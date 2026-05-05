@@ -10,6 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 class RoverSystemScannerTest {
     @Test
     void shouldScanValuesFromInput() {
+
+
         RoverSystemScanner scanner = RoverSystemScanner.from("1 2 N");
         RoverSystemScanner coordinateScanner = RoverSystemScanner.from("2 0");
         RoverSystemScanner directionScanner = RoverSystemScanner.from("N");
@@ -22,4 +24,5 @@ class RoverSystemScannerTest {
         assertEquals("X", consumeScanner.consume());
         assertNull(consumeScanner.consume());
     }
+
 }
