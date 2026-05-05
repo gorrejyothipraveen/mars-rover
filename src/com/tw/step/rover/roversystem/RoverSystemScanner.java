@@ -39,6 +39,8 @@ public class RoverSystemScanner {
         return Integer.parseInt(consume());
     }
 
+
+
     public Coordinate scanCoordinate() {
         int x = this.scanNumber();
         int y = this.scanNumber();

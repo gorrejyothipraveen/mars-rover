@@ -10,12 +10,18 @@ public class Rover {
     private RoverState roverState;
     private Coordinate coordinate;
     private Direction heading;
+    private RoverStatus status;
 
     public Rover(String id, Coordinate coordinate, Direction heading) {
         this.id = id;
         this.coordinate = coordinate;
         this.heading = heading;
         this.roverState = new LiveRoverState(this);
+        this.status = RoverStatus.ALIVE;
+    }
+
+    public void setStatus(RoverStatus status) {
+        this.status = status;
     }
 
     public Rover(Coordinate coordinate, Direction heading) {
@@ -50,12 +56,12 @@ public class Rover {
         this.coordinate = coordinate;
     }
 
-    boolean isWithin(Boundary boundary) {
-        return boundary.isWithin(this.coordinate);
+    boolean isWithin(Boundary boundary, Coordinate coord) {
+        return boundary.isWithin(coord);
     }
 
     @Override
     public String toString() {
-        return coordinate.toString() + " " + heading.toString();
+        return coordinate.toString() + " " + heading.toString() + " " + status;
     }
 }
