@@ -9,6 +9,11 @@ import com.tw.step.rover.position.Direction;
 import com.tw.step.rover.position.Navigator;
 import com.tw.step.rover.rover.Rover;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class RoverSystemParser {
     private final RoverSystemScanner scanner;
     private final Navigator navigator;
@@ -22,19 +27,33 @@ public class RoverSystemParser {
         this.commandCreator = commandCreator;
     }
 
-    private Rover parseRover() {
+    private Rover parseRover(String id) {
         Coordinate coordinate = scanner.scanCoordinate();
         Direction heading = scanner.scanDirection();
-        return new Rover(coordinate, heading);
+        return new Rover(id, coordinate, heading);
     }
 
-    public RoverSystem parse() {
-        RoverSystem roverSystem = new RoverSystem();
-        Rover rover = parseRover();
-        roverSystem.addRover(rover);
-        RoverCommands roverCommands = parseRoverCommands();
-        roverSystem.addCommands(roverCommands);
-        return roverSystem;
+    public List<RoverSystem> parse() {
+
+        Map<String, RoverSystem> rovers = new HashMap<>();
+
+        while(!scanner.peek().endsWith(":")) {
+            String id = scanner.consume() + ':';
+            RoverSystem roverSystem = new RoverSystem();
+            Rover rover = parseRover(id);
+            roverSystem.addRover(rover);
+            rovers.put(id, roverSystem);
+        }
+
+        while(scanner.peek() != null) {
+            String id = scanner.consume();
+            RoverSystem roverSystem = rovers.get(id);
+
+            RoverCommands roverCommands = parseRoverCommands();
+            roverSystem.addCommands(roverCommands);
+        }
+
+        return new ArrayList<>(rovers.values());
     }
 
     private RoverCommands parseRoverCommands() {

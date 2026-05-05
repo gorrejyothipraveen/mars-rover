@@ -3,6 +3,7 @@ package com.tw.step.rover.roversystem;
 import com.tw.step.rover.commands.RoverCommands;
 import com.tw.step.rover.position.Coordinate;
 import com.tw.step.rover.position.Direction;
+import com.tw.step.rover.rover.RoverData;
 
 public class RoverSystemScanner {
     private final String[] tokens;
@@ -38,8 +39,6 @@ public class RoverSystemScanner {
     public int scanNumber() {
         return Integer.parseInt(consume());
     }
-
-
 
     public Coordinate scanCoordinate() {
         int x = this.scanNumber();
